@@ -23,19 +23,28 @@
   to { transform: rotate(360deg); }
 }
 
+.login{
+  vertical-align: middle;
+  padding-top: 100px;
+}
+
 .cell {
   width: 100px;
   height: 100px;
   border: 1px solid black;
   float: left;
-  background-color: #dddddd;
+  background-color: #dfdfdf ;
+  border-radius: 5%;
+
 }
 
 #board {
-  width: 816px;
+  width: 900px;
+  vertical-align: middle;
+  padding: 50px;
 }
 
-#Empty{
+Empty{
 
 }
 
