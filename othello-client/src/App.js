@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Registration } from './Registration';
 import Login from './Login'
+import Board from './Board'
 
 export class App extends Component {
   constructor(props) {
@@ -14,12 +15,18 @@ export class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.postNewUser = this.postNewUser.bind(this);
     this.showRegistration = this.showRegistration.bind(this);
+    this.logUserIn = this.logUserIn.bind(this);
   }
 
   addUser(event) {
       event.preventDefault();
       this.postNewUser();
 
+  }
+
+  logUserIn(event){
+      event.preventDefault();
+      this.setState({mode: "Game"})
   }
 
   postNewUser(){
@@ -32,7 +39,7 @@ export class App extends Component {
           body: JSON.stringify(this.state.newUser)};
       return fetch('/users', myInit)
           .then(function(response) {
-              self.setState({newUser: {"email": "", "password": ""}, mode:"Index"})
+              self.setState({newUser: {"email": "", "password": ""}, mode:"Game"})
               return response;
           });
   }
@@ -51,8 +58,8 @@ export class App extends Component {
 
         switch(this.state.mode.toLowerCase()){
             case "registration": return <Registration addUser={this.addUser} handleInputChange={this.handleInputChange}/>
-            case "login" : return <Login showRegistration={this.showRegistration} handleInputChange={this.handleInputChange} />
-            case "index" : return <div id="index"/>
+            case "login" : return <Login showRegistration={this.showRegistration} logUserIn={this.logUserIn} handleInputChange={this.handleInputChange} />
+            case "game" : return <Board />
             default:
                 return <div />
         }

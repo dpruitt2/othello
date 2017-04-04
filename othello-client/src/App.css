@@ -22,3 +22,33 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.cell {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  float: left;
+  background-color: #dddddd;
+}
+
+#board {
+  width: 816px;
+}
+
+#Empty{
+
+}
+
+.Black{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+}
+
+.White{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+}

@@ -69,4 +69,9 @@ public class UserAcceptanceTest extends FluentTest {
     public void testExistingUserCanLogIn() throws Exception {
         goTo("http://localhost:" + this.port + "/");
     }
+
+    @Test
+    public void testStartingBoardShowsUp() throws Exception {
+        goTo("http://localhost:" + this.port + "/");
+    }
 }
