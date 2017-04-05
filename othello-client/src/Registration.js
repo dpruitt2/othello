@@ -27,6 +27,7 @@ export class Registration extends Component {
                         </div>
 
                     </form>
+                    <div id="errorMessage" className="has-warning">{this.props.errorMessage}</div>
                 </div>
 
 

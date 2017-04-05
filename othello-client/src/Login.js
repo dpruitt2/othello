@@ -1,6 +1,3 @@
-/**
- * Created by localadmin on 4/4/17.
- */
 import React, {Component} from 'react';
 import './App.css'
 
@@ -24,10 +21,12 @@ export class Login extends Component {
                             </div>
                             <div className="form-group text-center">
                                 <button className="btn btn-success btn-block" type="submit" id="login" onClick={this.props.logUserIn}>Login</button>
-                                <a href="#" id="signUp" onClick={this.props.showRegistration}>Sign Up</a>
                             </div>
 
                         </form>
+                        <a href="#" id="signUp" onClick={this.props.showRegistration}>Sign Up</a>
+                        {console.log("error message", this.props.errorMessage)}
+                        <div id="errorMessage" className="has-warning">{this.props.errorMessage}</div>
                     </div>
 
 

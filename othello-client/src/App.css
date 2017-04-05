@@ -61,3 +61,7 @@ Empty{
   height: 100px;
   background-color: white;
 }
+
+.has-warning {
+  font-color: red;
+}

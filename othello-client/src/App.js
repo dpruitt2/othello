@@ -9,7 +9,8 @@ export class App extends Component {
     super(props);
     this.state = {
       newUser: {"email": "", "password": ""},
-        mode :"Login"
+        mode :"Login",
+        errorMessage: ""
     }
     this.addUser = this.addUser.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,12 +22,29 @@ export class App extends Component {
   addUser(event) {
       event.preventDefault();
       this.postNewUser();
-
   }
 
   logUserIn(event){
-      event.preventDefault();
-      this.setState({mode: "Game"})
+      event.preventDefault()
+      const self = this;
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const myInit = { method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify(this.state.newUser)};
+      return fetch('/users/validate', myInit)
+          .then(function(response) {
+              console.log(response)
+              if(response.status >= 400){
+                  console.log("hey im in the bad request")
+                  self.setState({errorMessage: "User not found. Please re-enter your credentials or sign up."})
+                  return response
+              }
+              console.log("this shouldnt be here", response.status)
+              self.setState({newUser: {"email": "", "password": ""}, mode:"Game"})
+              return response;
+          });
   }
 
   postNewUser(){
@@ -39,6 +57,11 @@ export class App extends Component {
           body: JSON.stringify(this.state.newUser)};
       return fetch('/users', myInit)
           .then(function(response) {
+              console.log(response)
+              if(response.status === 400){
+                  self.setState({errorMessage: "This email has already been used.  Please use a different email or click forgot password to recover your account."})
+                  return response
+              }
               self.setState({newUser: {"email": "", "password": ""}, mode:"Game"})
               return response;
           });
@@ -57,8 +80,8 @@ export class App extends Component {
     get display(){
 
         switch(this.state.mode.toLowerCase()){
-            case "registration": return <Registration addUser={this.addUser} handleInputChange={this.handleInputChange}/>
-            case "login" : return <Login showRegistration={this.showRegistration} logUserIn={this.logUserIn} handleInputChange={this.handleInputChange} />
+            case "registration": return <Registration addUser={this.addUser} handleInputChange={this.handleInputChange} errorMessage={this.state.errorMessage}/>
+            case "login" : return <Login showRegistration={this.showRegistration} logUserIn={this.logUserIn} handleInputChange={this.handleInputChange} errorMessage={this.state.errorMessage} />
             case "game" : return <Board />
             default:
                 return <div />
