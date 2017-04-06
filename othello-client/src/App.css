@@ -40,6 +40,7 @@
 
 #board {
   width: 900px;
+  height: 900px;
   vertical-align: middle;
   padding: 50px;
 }
