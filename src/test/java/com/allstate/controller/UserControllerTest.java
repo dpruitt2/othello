@@ -17,13 +17,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by localadmin on 4/3/17.
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,35 +33,80 @@ public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-
     User user;
 
     @Before
     public void setup() {
-        user = new User();
-        user.setEmail("test@example.com");
-        user.setPassword("password");
+//        user = new User();
+//        user.setEmail("test@example.com");
+//        user.setPassword("password");
     }
 
     @After
     public void tearDown() {
-        userRepository.deleteAll();
+       // userRepository.deleteAll();
     }
 
     @Test
     @Transactional
     @Rollback
-    public void testRegisterUser() throws Exception {
+    public void testLoginUser() throws Exception {
+        MockHttpServletRequestBuilder request = post("/users/validate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\": \"doesntexist@example.com\",\"password\": \"wrongpassword\"}");
 
+        this.mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testUserRegister() throws Exception {
         MockHttpServletRequestBuilder request = post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"email\": \"test@example.com\",\"password\": \"password\"}");
+                .content("{\"email\": \"test@example.com\",\"password\": \"password\", \"password_confirmation\": \"password\"}");
 
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email", equalTo("test@example.com")))
                 .andExpect(jsonPath("$.password", equalTo("password")));
+    }
+//
+//    @Test
+//    @Transactional
+//    @Rollback
+//    public void testForgotPassword() throws Exception {
+//        MockHttpServletRequestBuilder request = post("/users/forgotPassword")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"email\": \"test@example.com\"");
+//
+//        this.mockMvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.email", equalTo("test@example.com")));
+//    }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void testEmailValidation() throws Exception {
 
+        MockHttpServletRequestBuilder request1 = post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\": \"test@example.com\",\"password\": \"password\", \"password_confirmation\": \"password\"}");
+
+        this.mockMvc.perform(request1)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email", equalTo("test@example.com")))
+                .andExpect(jsonPath("$.password", equalTo("password")));
+
+        MockHttpServletRequestBuilder request2 = post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\": \"test@example.com\",\"password\": \"password\", \"password_confirmation\": \"password\"}");
+
+        this.mockMvc.perform(request2)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", equalTo("This email address already exists")));
     }
 }

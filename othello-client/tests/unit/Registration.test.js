@@ -44,4 +44,14 @@ describe("Registration page test", ()=> {
 
         expect(mockAddUser).toHaveBeenCalledTimes(1)
     })
+
+    it("shows error message when user enters existing email address", () => {
+        const div = document.createElement('div');
+
+        const mockAddUser = jest.fn()
+        let errorMessage = "This email has already been used. Please use a different email or click forgot password to recover your account."
+        const register = mount(<Registration addUser={mockAddUser} errorMessage={errorMessage} />, div);
+
+        expect(register.find("#errorMessage").text()).toBe(errorMessage)
+    })
 })
