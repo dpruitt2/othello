@@ -17,7 +17,6 @@ export class Board extends Component {
         this.addPiece = this.addPiece.bind(this);
         this.renderPiece = this.renderPiece.bind(this);
         this.generateBoardSpaces = this.generateBoardSpaces.bind(this);
-        this.findNeighborsDirection = this.findNeighborsDirection.bind(this);
         this.traverseBoard = this.traverseBoard.bind(this);
         this.checkLegalMoves = this.checkLegalMoves.bind(this);
         this.checkSpaces = this.checkSpaces.bind(this);
@@ -35,23 +34,20 @@ export class Board extends Component {
     }
 
     flipPiece() {
-        // if(this.state.cells[id].value === "Black"){
-        //     this.state.cells[id].value = "White"
-        // } else if(this.state.cells[id].value === "White"){
-        //     this.state.cells[id].value = "Black"
-        // }
-        // this.setState({cells: this.state.cells})
-
         const currentTurn = this.state.turnCount % 2 ===0 ? "Black" : "White"
-
-        const cellHolder = this.state.cells.map((cell) => {
-            this.state.piecesToBeFlipped.map((piece) => {
+        let newCells = []
+        let cellHolder = this.state.cells.forEach((cell) => {
+            this.state.piecesToBeFlipped.forEach((piece) => {
                 if (cell.id === piece.id) {
                     cell.value = currentTurn
                 }
+                newCells.push(cell)
             })
         })
-        this.setState({cells: cellHolder, piecesToBeFlipped: []})
+
+        const emptyFlip = []
+        this.setState({cells: newCells, piecesToBeFlipped: emptyFlip})
+        debugger
     }
 
     addPiece(piece) {
@@ -89,8 +85,6 @@ export class Board extends Component {
     }
 
     checkSpaces(id) {
-        // returns value of piece
-        // console.log(parseInt(id))
         return this.state.cells[id].value
     }
 
@@ -120,27 +114,27 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'upLeft',
+                direction: -9,
                 id: upLeft,
                 value: upLeftValue
             },
             {
-                direction: 'downLeft',
+                direction: 7,
                 id: downLeft,
                 value: downLeftValue
             }
@@ -161,27 +155,27 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'upRight',
+                direction: -7,
                 id: upRight,
                 value: upRightValue
             },
             {
-                direction: 'downRight',
+                direction: 9,
                 id: downRight,
                 value: downRightValue
             },
@@ -202,27 +196,27 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'downRight',
+                direction: 9,
                 id: downRight,
                 value: downRightValue
             },
             {
-                direction: 'downLeft',
+                direction: 7,
                 id: downLeft,
                 value: downLeftValue
             }
@@ -243,27 +237,27 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'upRight',
+                direction: -7,
                 id: upRight,
                 value: upRightValue
             },
             {
-                direction: 'upLeft',
+                direction: -9,
                 id: upLeft,
                 value: upLeftValue
             }
@@ -279,17 +273,17 @@ export class Board extends Component {
             downLeftValue = this.checkSpaces(downLeft)
         return [
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'downLeft',
+                direction: 7,
                 id: downLeft,
                 value: downLeftValue
             }
@@ -305,17 +299,17 @@ export class Board extends Component {
             downRightValue = this.checkSpaces(downRight);
         return [
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'downRight',
+                direction: 9,
                 id: downRight,
                 value: downRightValue
             }
@@ -332,17 +326,17 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'upRight',
+                direction: -7,
                 id: upRight,
                 value: upRightValue
             }
@@ -360,17 +354,17 @@ export class Board extends Component {
             leftValue = this.checkSpaces(left);
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'upLeft',
+                direction: -9,
                 id: upLeft,
                 value: upLeftValue
             }
@@ -398,42 +392,42 @@ export class Board extends Component {
 
         return [
             {
-                direction: 'up',
+                direction: -8,
                 id: up,
                 value: upValue
             },
             {
-                direction: 'down',
+                direction: 8,
                 id: down,
                 value: downValue
             },
             {
-                direction: 'left',
+                direction: -1,
                 id: left,
                 value: leftValue
             },
             {
-                direction: 'right',
+                direction: 1,
                 id: right,
                 value: rightValue
             },
             {
-                direction: 'upRight',
+                direction: -7,
                 id: upRight,
                 value: upRightValue
             },
             {
-                direction: 'upLeft',
+                direction: -9,
                 id: upLeft,
                 value: upLeftValue
             },
             {
-                direction: 'downRight',
+                direction: 9,
                 id: downRight,
                 value: downRightValue
             },
             {
-                direction: 'downLeft',
+                direction: 7,
                 id: downLeft,
                 value: downLeftValue
             }
@@ -451,6 +445,7 @@ export class Board extends Component {
         let bottomLeft = 56;
         let bottomRight = 63;
         let result;
+
         if (outsideRight.includes(parseInt(id))) {
             result = this.checkOutsideRight(id)
         } else if(outsideBottom.includes(parseInt(id))){
@@ -474,16 +469,6 @@ export class Board extends Component {
         return result;
     }
 
-    findNeighborsDirection(direction) {
-        let outside = [15, 23, 31, 39, 47, 55,57, 58, 59, 60, 61, 62,8, 16, 24, 32, 40, 48, 1, 2, 3, 4, 5, 6, 0,7 , 56, 63]
-        // if(color === targetCellColor) {
-        //     return piecesToBeFlipped
-        // }
-
-        // if(outside.includes(parseInt(id))){
-        //
-        // }
-    }
 
     checkLegalMoves(id) {
         let currentNeighbors = this.findNeighbors(id);
@@ -494,27 +479,27 @@ export class Board extends Component {
 
         let oppositeNeighbors = currentNeighbors.filter((neighbor) => {
             return neighbor.value === currentTurnOpposite
-        })
+        });
 
-        // let pieces = this.state.piecesToBeFlipped;
-        // pieces.push(oppositeNeighbors[0])
-        // this.setState({piecesToBeFlipped: pieces});
-        const pieces = this.traverseBoard(oppositeNeighbors[0], 8)
-        console.log(pieces)
-        this.setState({piecesToBeFlipped: pieces})
+        let pieces = [];
+        oppositeNeighbors.forEach((cell) => {
+            let traversedPieces = this.traverseBoard(cell, cell.direction)
+            pieces.push(traversedPieces);
+        });
+        let flattenedPieces = [].concat.apply([], pieces)
         debugger
+        this.state.piecesToBeFlipped = flattenedPieces
+        this.setState({piecesToBeFlipped: this.state.piecesToBeFlipped})
+
         if(this.state.piecesToBeFlipped.length > 0) {
             legal = true;
             this.flipPiece();
+        console.log("THIS IS LEGAL")
         }
         return legal;
     }
 
-    traversePromise() {
-        
-    }
-
-    traverseBoard(cell, direction) {
+    traverseBoard(cell, direction, currentPieces) {
         let outside = [15, 23, 31, 39, 47, 55,57, 58, 59, 60, 61, 62,8, 16, 24, 32, 40, 48, 1, 2, 3, 4, 5, 6, 0,7 , 56, 63]
         let currentTurn = this.state.turnCount % 2 === 0 ? "Black" : "White";
         let nextCellId = cell.id + direction
@@ -522,40 +507,23 @@ export class Board extends Component {
             return item.id === nextCellId
         })
         // let pieces = this.state.piecesToBeFlipped
-        let pieces = []
+        let pieces = currentPieces || [];
 
         if(outside.indexOf(cell.id) > -1 && cell.value !== currentTurn) {
-            pieces = []
+            pieces = [];
             // this.setState({piecesToBeFlipped: []})
             return pieces;
         } else if (cell.value === "Empty") {
-            pieces = []
-            // this.setState({piecesToBeFlipped: pieces})
-            debugger
+            pieces = [];
             return pieces;
         } else if (cell.value === currentTurn) {
             return pieces
         } else {
-            pieces.push(cell)
-            this.traverseBoard(nextCell[0], direction)
-            // this.setState({piecesToBeFlipped: pieces})
+            pieces.push(cell);
+            return this.traverseBoard(nextCell[0], direction, pieces)
         }
 
-        console.log('this should never be hit')
-        return pieces
-
-        // return this.traverseBoard(nextCell[0], direction)
-
-
-
-
-
-        // if (nextCell[0].value === cell.value) {
-        //     this.setState({piecesToBeFlipped: this.state.piecesToBeFlipped.concat([nextCell[0]])})
-        //     traverseBoard(nextCell[0], direction)
-        // } else if (nextCell[0].value === currentTurn) {
-        //
-        // }
+        // return pieces
     }
 
     renderPiece(event){
@@ -568,23 +536,26 @@ export class Board extends Component {
             currentValue = this.state.cells[event.target.id].value;
             return "Empty"
             } else if (this.state.turnCount %2 === 0) {
-                if(this.checkLegalMoves(event.target.id)){
-                    cells[event.target.id].value = "Black"
+            cells[event.target.id].value = "Black"
+            debugger
+            if(this.checkLegalMoves(event.target.id)){
                     turnCount++
                     occupied = {[event.target.id] : cells[event.target.id].value}
-                    this.setState({/**cells: cells,**/ turnCount: turnCount, occupiedCells: occupied})
+                    this.setState({cells: cells, turnCount: turnCount, occupiedCells: occupied})
                 } else {
+                console.log("ILLEGAL")
                     cells[event.target.id].value = currentValue
                 }
 
                 return "Done"
             } else {
-                if(this.checkLegalMoves(event.target.id)){
-                    cells[event.target.id].value = "White"
+            cells[event.target.id].value = "White"
+            if(this.checkLegalMoves(event.target.id)){
                     turnCount++
                     occupied = {[event.target.id] : cells[event.target.id].value}
-                    this.setState({/**cells: cells,**/ turnCount: turnCount, occupiedCells: occupied})
+                    this.setState({cells: cells, turnCount: turnCount, occupiedCells: occupied})
                 } else {
+                console.log("ILLEGAL")
                     cells[event.target.id].value = currentValue
                 }
                 return "Done"
