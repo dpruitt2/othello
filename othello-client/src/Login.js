@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css'
 
+
 export class Login extends Component {
     render() {
         return(
@@ -9,7 +10,7 @@ export class Login extends Component {
                     <div className="well well-lg">
                         <h1 className="text-center">Login or Sign Up</h1>
                         <hr/>
-                        <form onSubmit={this.props.logUserIn}>
+                        <form onSubmit={this.props.loginUser}>
                             <div className="form-group">
                                 <label id="emailLabel">Email:</label>
                                 <input type="text" id="userEmail" name="email" onChange={this.props.handleInputChange} placeholder="Email" className="form-control"></input>
@@ -17,16 +18,16 @@ export class Login extends Component {
                             <div className="form-group">
                                 <label id="passwordLabel">Password:</label>
                                 <input type="password" id="userPassword" name="password" onChange={this.props.handleInputChange} placeholder="Password" className="form-control"></input>
-                                <a href="#" id="forgotPassword">Forgot Password?</a>
+                                <a href="#" id="forgotPassword" onClick={this.props.showForgotPassword}>Forgot Password?</a>
                             </div>
                             <div className="form-group text-center">
-                                <button className="btn btn-success btn-block" type="submit" id="login" onClick={this.props.logUserIn}>Login</button>
+                                <button className="btn btn-success btn-block" type="submit" id="login" onClick={this.props.loginUser}>Login</button>
                             </div>
 
                         </form>
                         <a href="#" id="signUp" onClick={this.props.showRegistration}>Sign Up</a>
-                        {console.log("error message", this.props.errorMessage)}
-                        <div id="errorMessage" className="has-warning">{this.props.errorMessage}</div>
+                        {console.log("error message", this.props.loginErrorMessage)}
+                        <div id="loginErrorMessage" >{this.props.loginErrorMessage}</div>
                     </div>
 
 

@@ -70,19 +70,20 @@ public class UserAcceptanceTest extends FluentTest {
 
     @Rollback
     @Test
-    public void testGuestCantLogIn() throws Exception {
+    public void testGuestCantLogIn()  {
         goTo("http://localhost:" + this.port + "/");
 
         $("#userEmail").write("test@example.com");
         $("#userPassword").write("password");
         $("form").submit();
 
-        await().until(() -> $("#errorMessage").text() != "");
+        Assert.assertEquals("Should not have any users", 0, repository.count());
 
-        String errorMessageActual = $(".has-warning").text();
-        System.out.println("================================================" + errorMessageActual);
+        await().until(() -> $("#loginErrorMessage").text() != "");
+
+        String errorMessageActual = $("#loginErrorMessage").text();
+        System.out.println($("#loginErrorMessage").tagNames());
         String errorMessageExpected  = "User not found. Please re-enter your credentials or sign up.";
-
         Assert.assertThat(errorMessageActual, CoreMatchers.containsString(errorMessageExpected));
     }
 
