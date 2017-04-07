@@ -31,23 +31,21 @@
 .cell {
   width: 100px;
   height: 100px;
-  border: 1px solid black;
   float: left;
-  background-color: #dfdfdf ;
+  border: .5px solid #002b36;
+  background-color: #89E589 ;
   border-radius: 5%;
 
 }
-
 #board {
-  width: 900px;
   height: 900px;
+  width: 900px;
   vertical-align: middle;
   padding: 50px;
+  margin-left:15.5%;
 }
 
-Empty{
 
-}
 
 .Black{
   border-radius: 50%;
@@ -65,4 +63,9 @@ Empty{
 
 .has-warning {
   font-color: red;
+}
+
+.page{
+  width: 1200px;
+  height: 1200px;
 }

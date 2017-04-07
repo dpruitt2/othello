@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css'
 
-
 export class Login extends Component {
     render() {
         return(
@@ -26,11 +25,8 @@ export class Login extends Component {
 
                         </form>
                         <a href="#" id="signUp" onClick={this.props.showRegistration}>Sign Up</a>
-                        {console.log("error message", this.props.loginErrorMessage)}
                         <div id="loginErrorMessage" >{this.props.loginErrorMessage}</div>
                     </div>
-
-
                 </div>
             </div>
         );
